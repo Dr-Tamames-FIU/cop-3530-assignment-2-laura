@@ -1,11 +1,22 @@
 package org.assignment2;
+import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Stack;
 
 public class FormulaCalc {
 
     public static void main(String[] args)
     {
-
+    Scanner scnr = new Scanner(new File("Formulas.txt"));
+        while (scnr.hasNextLine()) {
+            String formula = scnr.nextLine();
+            int protons = Algorithm(formula);
+            System.out.println(protons);
+        }
+        scnr.close();
     }
+
     /**
      * Algorithm
      * @param a Molecular formula
@@ -13,7 +24,14 @@ public class FormulaCalc {
      */
     public static int Algorithm(String a)
     {
-        
+        Stack<Integer> stack = new Stack<>();
+        int protons = 0;
+        int multiplier = 1;
+        String element = "";
+
+        for (int i = 0; i < a.length(); i++) {
+            char c = formula.charAt(i);
+            
        /* Use the class exercise for Lecture 6 and particularly, the answers on:
           https://itamames.github.io/Lecture6Answers/
           You can see how to parse an array in there.
@@ -21,8 +39,17 @@ public class FormulaCalc {
           For each of these 4 options, you need to perform a decision.
 
         //If is a capital letter 
-        {
+           if (Character.isUpperCase(c)) {
+        
             //if the stack is not empty
+            if (!element.isEmpty()) {
+                    protons += getElementProtons(element) * multiplier;
+                    element = "";
+                }
+                multiplier = 1;
+                element += c;
+            } 
+            
             {
             //pop 1:
             //add it to cumulative sum
@@ -30,17 +57,25 @@ public class FormulaCalc {
 
             //request the string value and add it to stack.
         }
+
+        
         //else if is a lowercase letter
         {
             //pop stack to clear it.
             //grab the prior letter and request the string value and add it to stack
         }
+
+
+        
         //else if it is a number
         {
             //pop 1:
             //multiply times the number
             //add it to a cumulative sum
         }
+
+
+        
         //else if parenthesis
         { 
 
