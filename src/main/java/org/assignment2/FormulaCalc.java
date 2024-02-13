@@ -6,8 +6,7 @@ import java.util.Stack;
 
 public class FormulaCalc {
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) throws FileNotFoundException {
     Scanner scnr = new Scanner(new File("Formulas.txt"));
         while (scnr.hasNextLine()) {
             String formula = scnr.nextLine();
@@ -26,11 +25,11 @@ public class FormulaCalc {
     {
         Stack<Integer> stack = new Stack<>();
         int protons = 0;
-        int multiplier = 1;
+        int multiple = 1;
         String element = "";
 
         for (int i = 0; i < a.length(); i++) {
-            char c = formula.charAt(i);
+            char c = a.charAt(i);
             
        /* Use the class exercise for Lecture 6 and particularly, the answers on:
           https://itamames.github.io/Lecture6Answers/
@@ -43,46 +42,54 @@ public class FormulaCalc {
         
             //if the stack is not empty
             if (!element.isEmpty()) {
-                    protons += getElementProtons(element) * multiplier;
+                //pop 1:
+                //add it to cumulative sum
+                    protons += getElementProtons(element) * multiple;
                     element = "";
                 }
-                multiplier = 1;
+           //request the string value and add it to stack.
+           stack.push(multiple);
+			multiple = 1;     
+           element += c;
+        }
+
+        //else if is a lowercase letter
+        else if (Character.isLowerCase(c)) {
                 element += c;
             } 
-            
-            {
-            //pop 1:
-            //add it to cumulative sum
-            }
-
-            //request the string value and add it to stack.
-        }
-
-        
-        //else if is a lowercase letter
-        {
             //pop stack to clear it.
             //grab the prior letter and request the string value and add it to stack
-        }
-
 
         
         //else if it is a number
-        {
             //pop 1:
             //multiply times the number
             //add it to a cumulative sum
-        }
-
-
-        
+        else if (Character.isDigit(c)) {
+				int digit = Character.getNumericValue(c);
+				while (i + 1 < a.length() && Character.isDigit(a.charAt(i + 1))) {
+					digit = digit * 10 + Character.getNumericValue(a.charAt(++i));
+				}
+				multiple = digit;
+			} 
+      
         //else if parenthesis
-        { 
+else if (c == '(') {
+				stack.push(multiple);
+				multiple = 1;
+			} 
+			else if (c == ')') {
+				protons += getElementProtons(element) * multiple;
+				multiple = stack.pop();
+			}
+		}
 
-        }
+		if (!element.isEmpty()) {
+			protons += getElementProtons(element) * multiple;
+		}
 
-      return 1;
-  }
+		return protons;
+	}
 
     
   private static int getElementProtons(String c) 
