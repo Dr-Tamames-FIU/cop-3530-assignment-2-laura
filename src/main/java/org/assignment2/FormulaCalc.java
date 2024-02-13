@@ -35,7 +35,7 @@ public class FormulaCalc {
           https://itamames.github.io/Lecture6Answers/
           You can see how to parse an array in there.
           Once you are dealing character by character, you can set a multiple if statement to check if that character is a capital letter, a small case letter, a number, or a parenthesis.
-          For each of these 4 options, you need to perform a decision.
+          For each of these 4 options, you need to perform a decision.*/
 
         //If is a capital letter 
            if (Character.isUpperCase(c)) {
